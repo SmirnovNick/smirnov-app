@@ -142,10 +142,12 @@ class Tree extends Component {
 
   function listfun(array) {
       return array.map(function (item, index) {
+
         if (item.children === null) {
           return <li key={index}>[{item.id}] {item.title}</li>;
         } else {
-          return <ul key={index}>{listfun(item.children)}</ul>;
+          return <li key={index}>[{item.id}] {item.title}
+           <ul>{listfun(item.children)}</ul></li>;
         }
       })
 
