@@ -99,7 +99,7 @@ class App extends Component {
             <input className="Form-element" type="number" placeholder="Parent" name="elementParent" value={this.state.elementParent} onChange={this.handleChange} />
             <input className="Form-element" type="submit" value="Добавить узел" />
         </form>
-        <Tree inputArray={this.state.outputArray} />
+        <Tree treeArray={this.state.outputArray} />
         <InputData inputArray={this.state.inputArray} />
 
       </div>
@@ -116,7 +116,7 @@ class InputData extends Component {
 
   render() {
 
-    var inputArray = this.state.inputArray.map(function(item, index) {
+    let inputArray = this.state.inputArray.map(function(item, index) {
       item.parent = (item.parent === null ? 'null' : item.parent);
 
       return (
@@ -145,12 +145,12 @@ class InputData extends Component {
 class Tree extends Component {
   constructor(props) {
     super(props);
-    this.state = {inputArray: this.props.inputArray};
+    this.state = {treeArray: this.props.treeArray};
   }
 
   render() {
 
-  var  list =  getList(this.state.inputArray);
+  let  list =  getList(this.state.treeArray);
 
   function getList(array) {
       return array.map(function (item, index) {
