@@ -75,13 +75,16 @@ border-right: 1px solid black;
   border: 1px solid black;
   border-right: 0px solid black;
 }
-
+.Tree li{
+  list-style-type: none;
+}
 .Tree{
+
   padding: 5px;
   margin-left: 25%;
   text-align: left;
   width: 50%;
-  
+
 }
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }

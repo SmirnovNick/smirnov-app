@@ -32,6 +32,14 @@ let data = [
     title: "Another Branch",
     parent: 2 },
   {
+    id: 8,
+    title: "Good Branch",
+    parent: 7 },
+  {
+    id: 9,
+    title: "Bad Branch",
+    parent: 7 },
+  {
     id: 7,
     title: "A Leaf",
     parent: 6 }
@@ -44,6 +52,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {inputArray: data,
+                  outputArray: getTree(data),
                   elementID: data.length,
                   elementTitle: '',
                   elementParent: ''};
@@ -68,9 +77,12 @@ class App extends Component {
       var title = (this.state.elementTitle === '' ? 'untitled' : this.state.elementTitle);
       var parent = (this.state.elementParent === '' ? null : this.state.elementParent);
       var newNode = data.push({id:this.state.elementID, title: title, parent: parent});
-      this.state.elementID++;
-      this.setState({inputArray: newNode});
       event.preventDefault();
+      this.setState({inputArray: newNode,
+                     outputArray: getTree(newNode)
+                     });
+      this.state.elementID++;
+
 
   }
 
@@ -87,7 +99,7 @@ class App extends Component {
             <input className="Form-element" type="number" placeholder="Parent" name="elementParent" value={this.state.elementParent} onChange={this.handleChange} />
             <input className="Form-element" type="submit" value="Добавить узел" />
         </form>
-        <Tree inputArray={getTree(this.state.inputArray)} />
+        <Tree inputArray={this.state.outputArray} />
         <InputData inputArray={this.state.inputArray} />
 
       </div>
@@ -133,21 +145,21 @@ class InputData extends Component {
 class Tree extends Component {
   constructor(props) {
     super(props);
-    this.state = {data: this.props.inputArray};
+    this.state = {inputArray: this.props.inputArray};
   }
 
   render() {
 
-  var  list =  listfun(this.state.data);
+  var  list =  getList(this.state.inputArray);
 
-  function listfun(array) {
+  function getList(array) {
       return array.map(function (item, index) {
 
         if (item.children === null) {
           return <li key={index}>[{item.id}] {item.title}</li>;
         } else {
           return <li key={index}>[{item.id}] {item.title}
-           <ul>{listfun(item.children)}</ul></li>;
+           <ul>{getList(item.children)}</ul></li>;
         }
       })
 
