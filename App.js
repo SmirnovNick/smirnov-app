@@ -45,14 +45,13 @@ let data = [
     parent: 6 }
 ];
 
-var tree = getTree(data);
-console.log(tree);
+//var tree = getTree(data);
+//console.log(tree);
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {inputArray: data,
-                  outputArray: getTree(data),
                   elementID: data.length,
                   elementTitle: '',
                   elementParent: ''};
@@ -78,9 +77,7 @@ class App extends Component {
       var parent = (this.state.elementParent === '' ? null : this.state.elementParent);
       var newNode = data.push({id:this.state.elementID, title: title, parent: parent});
       event.preventDefault();
-      this.setState({inputArray: newNode,
-                     outputArray: getTree(newNode)
-                     });
+      this.setState({inputArray: newNode});
       this.state.elementID++;
 
 
@@ -99,7 +96,7 @@ class App extends Component {
             <input className="Form-element" type="number" placeholder="Parent" name="elementParent" value={this.state.elementParent} onChange={this.handleChange} />
             <input className="Form-element" type="submit" value="Добавить узел" />
         </form>
-        <Tree treeArray={this.state.outputArray} />
+        <Tree treeArray={this.state.inputArray} />
         <InputData inputArray={this.state.inputArray} />
 
       </div>
@@ -145,7 +142,7 @@ class InputData extends Component {
 class Tree extends Component {
   constructor(props) {
     super(props);
-    this.state = {treeArray: this.props.treeArray};
+    this.state = {treeArray: getTree(this.props.treeArray)};
   }
 
   render() {
