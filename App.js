@@ -145,7 +145,11 @@ class Tree extends Component {
     this.state = {treeArray: getTree(this.props.treeArray)};
   }
 
+deleteFun(){
+  alert('delete');
+}
   render() {
+
 
   let  list =  getList(this.state.treeArray);
 
@@ -153,9 +157,11 @@ class Tree extends Component {
       return array.map(function (item, index) {
 
         if (item.children === null) {
-          return <li key={index}>[{item.id}] {item.title}</li>;
+          return <li key={index}>[{item.id}] {item.title}  <span className="delete">&#10006;</span>
+
+                  </li>;
         } else {
-          return <li key={index}>[{item.id}] {item.title}
+          return <li key={index}>[{item.id}] {item.title} <span className="delete">&#10006;</span>
            <ul>{getList(item.children)}</ul></li>;
         }
       })

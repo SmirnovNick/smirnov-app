@@ -78,7 +78,14 @@ border-right: 1px solid black;
 .Tree li{
   list-style-type: none;
 }
-
+.delete{
+  opacity: 0.5;
+  color: red;
+}
+.delete:hover{
+  opacity: 1;
+  color: red;
+}
 .Tree{
 
   padding: 5px;
