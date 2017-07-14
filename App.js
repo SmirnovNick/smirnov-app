@@ -92,8 +92,8 @@ class App extends Component {
         </div>
         <form onSubmit={this.handleSubmit}>
             <input className="Form-element" type="number" placeholder="ID"   name="elementID" value={this.state.elementID} onChange={this.handleChange} />
-            <input className="Form-element" type="text" placeholder="Title"  name="elementTitle" value={this.state.elementTitle} onChange={this.handleChange} />
             <input className="Form-element" type="number" placeholder="Parent" name="elementParent" value={this.state.elementParent} onChange={this.handleChange} />
+            <input className="Form-element" type="text" placeholder="Title"  name="elementTitle" value={this.state.elementTitle} onChange={this.handleChange} />
             <input className="Form-element" type="submit" value="Добавить узел" />
         </form>
         <Tree treeArray={this.state.inputArray} />

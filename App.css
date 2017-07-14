@@ -38,10 +38,17 @@
   border-bottom: 0px solid black;
 }
 .Form-element:first-child{
+  width: 5.5%;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
 margin-left: 1%;
 
+}
+.Form-element:nth-child(2){
+  width: 7%;
+}
+.Form-element:nth-child(3){
+  width: 25%;
 }
 .Form-element:last-child{
   border-bottom-right-radius: 5px;
