@@ -87,7 +87,7 @@ class App extends Component {
             <input className="Form-element" type="number" placeholder="Parent" name="elementParent" value={this.state.elementParent} onChange={this.handleChange} />
             <input className="Form-element" type="submit" value="Добавить узел" />
         </form>
-        <Children inputArray={getTree(this.state.inputArray)} />
+        <Tree inputArray={getTree(this.state.inputArray)} />
         <InputData inputArray={this.state.inputArray} />
 
       </div>
@@ -130,7 +130,7 @@ class InputData extends Component {
 }
 
 
-class Children extends Component {
+class Tree extends Component {
   constructor(props) {
     super(props);
     this.state = {data: this.props.inputArray};
@@ -145,14 +145,15 @@ class Children extends Component {
         if (item.children === null) {
           return <li key={index}>[{item.id}] {item.title}</li>;
         } else {
-          return listfun(item.children);
-        };
+          return <ul key={index}>{listfun(item.children)}</ul>;
+        }
       })
 
     }
 
-    return (
+    return (<div className="Tree">
       <ul>{ list }</ul>
+      </div>
     );
   }
 }
