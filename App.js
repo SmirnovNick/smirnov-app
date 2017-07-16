@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 import logo from './logo.svg';
 import './App.css';
 
@@ -46,9 +45,6 @@ let data = [
     parent: 6 }
 ];
 
-//var tree = getTree(data);
-//console.log(tree);
-
 class App extends Component {
   constructor(props) {
     super(props);
@@ -79,7 +75,6 @@ class App extends Component {
       data.push({id:parseInt(this.state.elementID), title: title, parent: parent});
 
       this.setState({inputArray: data});
-      console.log(this.state.inputArray);
       this.state.elementID++;
       event.preventDefault();
 
