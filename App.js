@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import logo from './logo.svg';
 import './App.css';
 
@@ -73,12 +74,14 @@ class App extends Component {
 
   handleSubmit(event) {
 
-      var title = (this.state.elementTitle === '' ? 'untitled' : this.state.elementTitle);
-      var parent = (this.state.elementParent === '' ? null : this.state.elementParent);
-      var newNode = data.push({id:this.state.elementID, title: title, parent: parent});
-      event.preventDefault();
-      this.setState({inputArray: newNode});
+      var title  = (this.state.elementTitle  === '' ? 'untitled' : this.state.elementTitle);
+      var parent = (this.state.elementParent === '' ? null : parseInt(this.state.elementParent));
+      data.push({id:parseInt(this.state.elementID), title: title, parent: parent});
+
+      this.setState({inputArray: data});
+      console.log(this.state.inputArray);
       this.state.elementID++;
+      event.preventDefault();
 
 
   }
@@ -96,33 +99,35 @@ class App extends Component {
             <input className="Form-element" type="text" placeholder="Title"  name="elementTitle" value={this.state.elementTitle} onChange={this.handleChange} />
             <input className="Form-element" type="submit" value="Добавить узел" />
         </form>
-        <Tree treeArray={this.state.inputArray} />
-        <InputData inputArray={this.state.inputArray} />
+
+
+         <Tree inputArray={this.state.inputArray} />
+         <InputData inputArray={this.state.inputArray} />
 
       </div>
     );
   }
 }
 
+
 class InputData extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {inputArray: this.props.inputArray};
+    this.state = {dataArray: this.props.inputArray};
   }
 
   render() {
 
-    let inputArray = this.state.inputArray.map(function(item, index) {
-      item.parent = (item.parent === null ? 'null' : item.parent);
-
+    let inputArray = this.state.dataArray.map(function(item, index) {
+      let parent = (item.parent === null ? 'null' : item.parent);
       return (
         <div key={index}>
           <div className="InputData-row">
-            &#123;id: {item.id}, title: "{item.title}", parent: {item.parent}  &#125;,
-            </div>
-            </div>
-          )
+            &#123;id: {item.id}, title: "{item.title}", parent: {parent}  &#125;,
+          </div>
+        </div>
+      )
     });
 
     return (
@@ -138,47 +143,55 @@ class InputData extends Component {
   }
 }
 
-
 class Tree extends Component {
+
   constructor(props) {
     super(props);
-    this.state = {treeArray: getTree(this.props.treeArray)};
+    this.state = {dataArray: this.props.inputArray};
+
+    this.handleClick = this.handleClick.bind(this);
   }
 
-deleteFun(){
-  alert('delete');
-}
-  render() {
-
-
-  let  list =  getList(this.state.treeArray);
-
-  function getList(array) {
-      return array.map(function (item, index) {
-
-        if (item.children === null) {
-          return <li key={index}>[{item.id}] {item.title}  <span className="delete">&#10006;</span>
-
-                  </li>;
-        } else {
-          return <li key={index}>[{item.id}] {item.title} <span className="delete">&#10006;</span>
-           <ul>{getList(item.children)}</ul></li>;
-        }
-      })
-
+  handleClick(event){
+    for (var i = 0; i < this.state.dataArray.length; i++) {
+      if(data[i]['id'] ===  parseInt(event.target.id)){
+        this.state.dataArray.splice(i, 1);
+      }
     }
+    event.preventDefault();
+    this.setState({
+    dataArray: this.state.dataArray
+    });
+  }
 
-    return (<div className="Tree">
-      <ul>{ list }</ul>
-      </div>
+  render() {
+    let list =  getList(getTree(this.state.dataArray));
+    return (
+      <form onClick={this.handleClick}><div className="Tree">
+          <ul>{ list }</ul>
+      </div></form>
     );
   }
 }
 
+function getList(array) {
+    return array.map(function (item, index) {
 
+      if (!Array.isArray(item.children)) {
+        return <li key={index}>[{item.id}] {item.title} <span id={item.id.toString()} className="delete"  >&#10006;</span>
+
+                </li>;
+      } else {
+        return <li key={index}>[{item.id}] {item.title} <span id={item.id.toString()} className="delete"  >&#10006;</span>
+         <ul>{getList(item.children)}</ul></li>;
+      }
+    })
+
+  }
 function getTree(data, level = 0, id = 0, index = 0) {
 
   let output = [];
+
 
   if (index < data.length && data[index]['parent'] === null ) {
     for (let i = 0; i < data.length; i++) {
@@ -217,5 +230,4 @@ function getTree(data, level = 0, id = 0, index = 0) {
   }
   return output;
 }
-
 export default App;
