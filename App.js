@@ -4,6 +4,10 @@ import './App.css';
 
 let data = [
   {
+    id: 10,
+    title: "Pictures 8",
+    parent: null },
+  {
     id: 0,
     title: "Pictures",
     parent: null },
@@ -97,7 +101,7 @@ class App extends Component {
 
 
          <Tree inputArray={this.state.inputArray} />
-         <InputData inputArray={this.state.inputArray} />
+
 
       </div>
     );
@@ -150,26 +154,29 @@ class Tree extends Component {
   handleClick(event){
     for (var i = 0; i < this.state.dataArray.length; i++) {
       if(data[i]['id'] ===  parseInt(event.target.id)){
-        this.state.dataArray.splice(i, 1);
+        data.splice(i, 1);
       }
     }
     event.preventDefault();
     this.setState({
-    dataArray: this.state.dataArray
+    dataArray: data
     });
   }
 
   render() {
     let list =  getList(getTree(this.state.dataArray));
-    return (
+    return (<div>
       <form onClick={this.handleClick}><div className="Tree">
           <ul>{ list }</ul>
       </div></form>
+
+      <InputData inputArray={this.state.dataArray} /></div>
     );
   }
 }
 
 function getList(array) {
+    if (array != null){
     return array.map(function (item, index) {
 
       if (!Array.isArray(item.children)) {
@@ -180,7 +187,8 @@ function getList(array) {
         return <li key={index}>[{item.id}] {item.title} <span id={item.id.toString()} className="delete"  >&#10006;</span>
          <ul>{getList(item.children)}</ul></li>;
       }
-    })
+    })}
+    else {return <div className="Warning">Ошибка: Входной массив пуст или не имеет родителей.</div>}
 
   }
 function getTree(data, level = 0, id = 0, index = 0) {
