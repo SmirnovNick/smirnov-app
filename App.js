@@ -154,12 +154,12 @@ class Tree extends Component {
   handleClick(event){
     for (var i = 0; i < this.state.dataArray.length; i++) {
       if(data[i]['id'] ===  parseInt(event.target.id)){
-        data.splice(i, 1);
+        this.state.dataArray.splice(i, 1);
       }
     }
     event.preventDefault();
     this.setState({
-    dataArray: data
+    dataArray: this.state.dataArray
     });
   }
 
