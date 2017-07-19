@@ -189,7 +189,7 @@ function getTree(data, level = 0, id = 0, index = 0) {
 
 
   if (index < data.length && data[index]['parent'] === null ) {
-    for (let i = 0; i < data.length; i++) {
+    for (let i = index; i < data.length; i++) {
       if (data[i]['parent'] === null && level === 0) {
         output.push(
           {
